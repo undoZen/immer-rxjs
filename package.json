@@ -1,0 +1,44 @@
+{
+  "name": "immer-rxjs",
+  "version": "1.0.0",
+  "description": "some operators help you use immer with rxjs",
+  "files": [
+    "dist/index.js"
+  ],
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "rollup -c rollup.config.js",
+    "prepare": "install-peers",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/undoZen/immer-rxjs.git"
+  },
+  "keywords": [
+    "immer",
+    "immutable",
+    "rxjs",
+    "frp"
+  ],
+  "author": "undoZen",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/undoZen/immer-rxjs/issues"
+  },
+  "homepage": "https://github.com/undoZen/immer-rxjs#readme",
+  "devDependencies": {
+    "@rollup/plugin-commonjs": "^11.0.2",
+    "@rollup/plugin-node-resolve": "^7.1.1",
+    "install-peers-cli": "^2.2.0",
+    "rollup": "^2.1.0"
+  },
+  "peerDependencies": {
+    "immer": "^6",
+    "rxjs": "^6"
+  },
+  "dependencies": {
+    "fast-json-patch": "^3.0.0-1",
+    "is-primitive": "^3.0.1"
+  }
+}
