@@ -9,7 +9,7 @@
   "scripts": {
     "build": "rollup -c rollup.config.js",
     "prepare": "install-peers",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "ava"
   },
   "repository": {
     "type": "git",
@@ -30,6 +30,7 @@
   "devDependencies": {
     "@rollup/plugin-commonjs": "^11.0.2",
     "@rollup/plugin-node-resolve": "^7.1.1",
+    "ava": "^3.5.1",
     "install-peers-cli": "^2.2.0",
     "rollup": "^2.1.0"
   },

@@ -1,30 +1,22 @@
-import produce from 'immer';
-import { pipe, identity } from 'rxjs';
-import { scan, pluck } from 'rxjs/operators';
-import { applyPatch, compare } from 'fast-json-patch';
-import isPrimitive from 'is-primitive';
+import produce from "immer";
+import { pipe, identity } from "rxjs";
+import { scan, pluck } from "rxjs/operators";
+import isPrimitive from "is-primitive";
+import newProduce from "./produce";
 
-function produceOperator(fn) {
+function produceOperator(fn, skipCompare) {
+  if (!fn) {
+    fn = identity;
+  }
   return pipe(
     scan(([last], current) => {
-      return [produce(last, draft => fn(draft, current))];
+      if (isPrimitive(last) || isPrimitive(current)) {
+        return [produce(current, () => {})];
+      }
+      return [newProduce(current, last, fn, skipCompare)];
     }, []),
-    pluck(0),
+    pluck(0)
   );
 }
-function mapOperator(fn) {
-  return produceOperator((last, current) => {
-    current = fn(current);
-    if (isPrimitive(last) || isPrimitive(current)) {
-      return current;
-    }
-    return produce(last, draft => {
-      applyPatch(draft, compare(last, current));
-    });
-  });
-}
-function mapIdentity() {
-  return mapOperator(identity);
-}
-export default mapIdentity;
-export { produceOperator as produce, mapOperator as map, mapIdentity };
+
+export default produceOperator;
