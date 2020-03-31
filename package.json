@@ -1,6 +1,6 @@
 {
   "name": "immer-rxjs",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "some operators help you use immer with rxjs",
   "files": [
     "dist/index.js"
