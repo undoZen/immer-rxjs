@@ -8,9 +8,9 @@ import produce from 'immer-rxjs'
 source$.pipe(produce(producer, skipCompare))
 ```
 
-The `producer` function is like Immer's [Curried producers](https://immerjs.github.io/immer/docs/curried-produce) except that it expect new value from `source$` (like `action` from curried producer) be the first argument and `draft` to the be second.
+The `produce` function is like Immer's [Curried producers](https://immerjs.github.io/immer/docs/curried-produce) except that it expect new value from `source$` (like `action` of curried producer) be the first argument and `draft` to be the second.
 
-you can edit draft object like in immer producer:
+You can edit draft object like in immer producer:
 
 ```javascript
 import {produce} from 'immer-rxjs'
@@ -39,6 +39,7 @@ sub$.pipe(
   buffer(2),
 ).subscript(([v1, v2]) => {
   console.log(v1) // {b: 3}
+  console.log(v2) // {b: 3}
   console.log(v1 === v2) // true
 })
 sub$.next({b: 2})
