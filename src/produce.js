@@ -1,10 +1,10 @@
 import produce from "immer";
 import { applyPatch, compare } from "fast-json-patch";
 export default function newProduce(current, last, fn, skipCompare) {
-  return produce(last, draft => {
+  return produce(last, (draft) => {
     let patches;
     let returned;
-    const result = produce(last, innerDraft => {
+    const result = produce(last, (innerDraft) => {
       returned = fn(current, innerDraft);
       if (returned === undefined) {
         return;

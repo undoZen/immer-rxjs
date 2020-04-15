@@ -7,6 +7,7 @@
   ],
   "main": "dist/index.js",
   "scripts": {
+    "dev": "nodemon -w src --exec npm run build",
     "build": "rollup -c rollup.config.js",
     "prepare": "install-peers",
     "test": "ava"
@@ -32,6 +33,7 @@
     "@rollup/plugin-node-resolve": "^7.1.1",
     "ava": "^3.5.1",
     "install-peers-cli": "^2.2.0",
+    "nodemon": "^2.0.3",
     "rollup": "^2.1.0"
   },
   "peerDependencies": {

@@ -9,10 +9,10 @@ var isPrimitive = _interopDefault(require('is-primitive'));
 var fastJsonPatch = require('fast-json-patch');
 
 function newProduce(current, last, fn, skipCompare) {
-  return produce(last, draft => {
+  return produce(last, (draft) => {
     let patches;
     let returned;
-    const result = produce(last, innerDraft => {
+    const result = produce(last, (innerDraft) => {
       returned = fn(current, innerDraft);
       if (returned === undefined) {
         return;
@@ -31,7 +31,7 @@ function newProduce(current, last, fn, skipCompare) {
   });
 }
 
-function produceOperator(fn, skipCompare) {
+function produceOperator(fn, compare = false) {
   if (!fn) {
     fn = rxjs.identity;
   }
@@ -40,7 +40,7 @@ function produceOperator(fn, skipCompare) {
       if (isPrimitive(last) || isPrimitive(current)) {
         return [produce(current, () => {})];
       }
-      return [newProduce(current, last, fn, skipCompare)];
+      return [newProduce(current, last, fn, !compare)];
     }, []),
     operators.pluck(0)
   );

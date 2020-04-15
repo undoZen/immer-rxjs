@@ -4,7 +4,7 @@ import { scan, pluck } from "rxjs/operators";
 import isPrimitive from "is-primitive";
 import newProduce from "./produce";
 
-function produceOperator(fn, skipCompare) {
+function produceOperator(fn, compare = false) {
   if (!fn) {
     fn = identity;
   }
@@ -13,7 +13,7 @@ function produceOperator(fn, skipCompare) {
       if (isPrimitive(last) || isPrimitive(current)) {
         return [produce(current, () => {})];
       }
-      return [newProduce(current, last, fn, skipCompare)];
+      return [newProduce(current, last, fn, !compare)];
     }, []),
     pluck(0)
   );
