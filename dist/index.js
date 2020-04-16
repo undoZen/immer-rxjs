@@ -7,10 +7,6 @@ var rxjs = require('rxjs');
 var operators = require('rxjs/operators');
 var isPrimitive = _interopDefault(require('is-primitive'));
 
-function newProduce(current, last, fn) {
-  return produce(last, (draft) => fn(current, draft));
-}
-
 function produceOperator(fn) {
   if (!fn) {
     fn = rxjs.identity;
@@ -20,7 +16,7 @@ function produceOperator(fn) {
       if (isPrimitive(last) || isPrimitive(current)) {
         return produce(current, () => {});
       }
-      return newProduce(current, last, fn);
+      return produce(last, (draft) => fn(current, draft));
     }, null)
   );
 }
