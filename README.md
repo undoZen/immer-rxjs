@@ -1,6 +1,13 @@
 # immer-rxjs
 This small library helps you use Immer with RxJS. It exports only one function, you can use it to replace rxjs's `map` operator:
 
+## update in 3.0.0
+I find that compare new value and then reapply the change is a bad idea so I turned it off by default in 2.0.0 and removed it in 3.0.0
+
+So now produce will only accept the first argument and ignore the second, documents keep untouched below.
+
+The [source](https://github.com/undoZen/immer-rxjs/blob/master/src/index.js) is quite simple you shou check it out.
+
 ## `produce()`
 
 ```javascript

@@ -1,21 +1,23 @@
 import produce from "immer";
 import { pipe, identity } from "rxjs";
-import { scan, pluck } from "rxjs/operators";
+import { scan } from "rxjs/operators";
 import isPrimitive from "is-primitive";
-import newProduce from "./produce";
 
-function produceOperator(fn, compare = false) {
+function newProduce(current, last, fn) {
+  return produce(last, (draft) => fn(current, draft));
+}
+
+function produceOperator(fn) {
   if (!fn) {
     fn = identity;
   }
   return pipe(
-    scan(([last], current) => {
+    scan((last, current) => {
       if (isPrimitive(last) || isPrimitive(current)) {
-        return [produce(current, () => {})];
+        return produce(current, () => {});
       }
-      return [newProduce(current, last, fn, !compare)];
-    }, []),
-    pluck(0)
+      return newProduce(current, last, fn);
+    }, null)
   );
 }
 

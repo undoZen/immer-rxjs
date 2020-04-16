@@ -41,7 +41,6 @@
     "rxjs": "^6"
   },
   "dependencies": {
-    "fast-json-patch": "^3.0.0-1",
     "is-primitive": "^3.0.1"
   }
 }
