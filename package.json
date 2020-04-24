@@ -3,12 +3,16 @@
   "version": "3.2.0",
   "description": "some operators help you use immer with rxjs",
   "files": [
-    "dist/index.js"
+    "dist/index.d.ts",
+    "dist/index.js",
+    "dist/index.commonjs.js"
   ],
-  "main": "dist/index.js",
+  "main": "dist/index.commonjs.js",
+  "jsnext:main": "dist/index.js",
+  "module": "dist/index.js",
   "scripts": {
-    "dev": "tsc -w",
-    "build": "rm -rf dist && tsc",
+    "dev": "tsc -w -m umd",
+    "build": "rm -rf dist && tsc -m commonjs && mv dist/index.js dist/index.commonjs.js && tsc -m esnext",
     "prepare": "install-peers",
     "test": "ava"
   },
