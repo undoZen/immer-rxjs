@@ -1,3 +1,2 @@
-import { Draft } from "immer";
 import { Observable, UnaryFunction } from "rxjs";
-export default function produceOperator<T, P>(fn: (current: P, draft: T | Partial<T & P> | Draft<Partial<T & P>>) => Partial<T & P> | void, initValue: T): UnaryFunction<Observable<P>, Observable<Partial<T & P>>>;
+export default function produceOperator<T, P, Q = Partial<T & P>>(fn?: (current: T, draft: Partial<T & Q>) => T | P | Q | void, initValue?: P): UnaryFunction<Observable<T>, Observable<Partial<T & Q>>>;

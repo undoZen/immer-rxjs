@@ -11,10 +11,11 @@ export default function produceOperator(fn, initValue) {
     if (!fn) {
         fn = identity;
     }
+    initValue = produce(initValue, () => { });
     return pipe(scan((last, current) => {
         if (isPrimitive(last) || isPrimitive(current)) {
             return produce(current, () => { });
         }
         return produce(last, (draft) => fn(current, draft));
-    }, produce(initValue, () => { })));
+    }, initValue));
 }

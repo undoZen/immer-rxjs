@@ -9,22 +9,22 @@ function isPrimitive(val: any): boolean {
   return typeof val !== "function";
 }
 
-export default function produceOperator<T, P>(
-  fn: (
-    current: P,
-    draft: T | Partial<T & P> | Draft<Partial<T & P>>
-  ) => Partial<T & P> | void,
-  initValue: T
-): UnaryFunction<Observable<P>, Observable<Partial<T & P>>> {
+export default function produceOperator<T, P, Q = Partial<T & P>>(
+  fn?: (current: T, draft: Partial<T & Q>) => T | P | Q | void,
+  initValue?: P
+): UnaryFunction<Observable<T>, Observable<Partial<T & Q>>> {
   if (!fn) {
     fn = identity;
   }
+  initValue = produce(initValue, () => {}) as P;
   return pipe(
-    scan((last, current) => {
+    scan<T, Partial<T & Q>>((last, current) => {
       if (isPrimitive(last) || isPrimitive(current)) {
         return produce(current, () => {});
       }
-      return produce(last, (draft) => fn(current, draft)) as Partial<T & P>;
-    }, produce(initValue, () => {}) as Partial<T & P>)
+      return produce(last, (draft) =>
+        fn!(current, draft as Partial<T & Q>)
+      ) as Q;
+    }, initValue)
   );
 }
