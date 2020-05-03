@@ -11,7 +11,7 @@
   "jsnext:main": "dist/index.esnext.js",
   "module": "dist/index.esnext.js",
   "scripts": {
-    "dev": "tsc -w -m umd",
+    "dev": "tsc -w -m umd -t ES5",
     "build": "rm -rf dist && tsc -m esnext && mv dist/index.js dist/index.esnext.js && tsc -m umd",
     "prepare": "install-peers",
     "test": "ava"

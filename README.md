@@ -2,7 +2,7 @@
 This small library helps you use Immer with RxJS. It exports only one function, you can use it to replace rxjs's `map` operator.
 
 ## update in 3.0.0
-At beginning I want to compute and reapply patches by fast-json-patch so I could be sure if the produced value is structurally identical to previous value, the result will be identically be the same, but late on I find that is a bad idea (user should be clear about that) so I turned it off by default in 2.0.0 and removed it in 3.0.0.
+At beginning I want to compute and reapply patches by fast-json-patch so I could be sure if the produced value is structurally identical to previous value, the result will be identically be the same, but late on I find that is a bad idea (you should use immer the right way and don't worry about it) so I turned it off by default in 2.0.0 and removed it in 3.0.0.
 
 ## Usage
 
@@ -15,10 +15,13 @@ import { scan } from "rxjs/operators";
 function defaultMapFn(current, last) {
     Object.assign(last, current);
 }
-export default function produceOperator(fn = defaultMapFn, initValue) {
-    initValue = produce(initValue || {}, () => { });
-    return pipe(scan((last, current) => {
-        return produce(last, (draft) => fn(current, draft));
+export default function produceOperator(fn, initValue) {
+    if (fn === void 0) { fn = defaultMapFn; }
+    if (initValue === void 0) { initValue = produce({}, function () { }); }
+    return pipe(scan(function (last, current) {
+        return produce(last, function (draft) {
+            return fn(current, draft);
+        });
     }, initValue));
 }
 ```

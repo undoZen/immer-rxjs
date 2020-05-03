@@ -11,13 +11,12 @@ export default function produceOperator<
   Q = Partial<T & P>
 >(
   fn: (current: T, draft: Partial<T & Q>) => P | Q | void = defaultMapFn,
-  initValue?: P
+  initValue: P = produce({}, () => {}) as P
 ): UnaryFunction<Observable<T>, Observable<Partial<T & Q>>> {
-  initValue = produce(initValue || {}, () => {}) as P;
   return pipe(
     scan<T, Partial<T & Q>>((last, current) => {
       return produce(last, (draft) =>
-        fn!(current, draft as Partial<T & Q>)
+        fn(current, draft as Partial<T & Q>)
       ) as Q;
     }, initValue)
   );
